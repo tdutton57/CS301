@@ -1,0 +1,48 @@
+Notes From 10.20.2013
+
+Input
+Pre Processing
+	takes aarf
+	allows user to select decision attribute
+	create lists
+Calculator
+	Rico
+	Algorithm
+Output
+	Rule Set
+	Other Requirements
+Other:
+	Create zip information file
+	create instruction file
+	other requirements
+
+
+PACKAGE:
+	com.cs301.DuttonBoling
+	GUI
+	Calculator
+	Models: RULE.java Decision.java
+
+
+Model Package:
+entry
+	nominal extend attribute
+	binary extend attribute
+	numeric extend attribute
+
+Model Class
+	Attribute[] decision = false
+Attribute()
+Attribute(boolean decision)
+
+Model Object: define model type
+Nominal: String Array
+	isValid(String)
+
+Entry.Class
+	Static Define model (attribute...)
+	static Attribute[...] Model
+	Entry)string line from aarff file)
+
+//Might want to call Util.parse 
+
