@@ -36,6 +36,11 @@ public class Numeric extends Attribute {
 
     @Override
     public String toString() {
-        return super.toString();    //To change body of overridden methods use File | Settings | File Templates.
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(this.name);
+        stringBuilder.append("=");
+        stringBuilder.append(this.data);
+        stringBuilder.append(" ");
+        return stringBuilder.toString();
     }
 }

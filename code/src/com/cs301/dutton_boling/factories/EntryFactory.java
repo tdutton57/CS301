@@ -64,16 +64,16 @@ public class EntryFactory {
             switch (attributeBuilder.attributeType){
                 case NOMINAL:
                     if(attributeBuilder.nominals.contains(data)){
-                        returnable.add(new Nominal(attributeBuilder.name, data));
+                        returnable.add(new Nominal(attributeBuilder.name, data.equals("?") ? null : data));
                     }else {
                         throw new IllegalStateException("Innappropriate Type Passed");
                     }
                     break;
                 case BINARY:
-                    returnable.add(new Binary(attributeBuilder.name, Boolean.parseBoolean(data)));
+                    returnable.add(new Binary(attributeBuilder.name, data.equals("?") ? null : Boolean.parseBoolean(data)));
                     break;
                 case NUMERIC:
-                    returnable.add(new Numeric(attributeBuilder.name, Integer.parseInt(data)));
+                    returnable.add(new Numeric(attributeBuilder.name, data.equals("?") ? null : Integer.parseInt(data)));
                     break;
             }
         }
