@@ -2,6 +2,7 @@ package com.cs301.dutton_boling.gui;
 
 import com.cs301.dutton_boling.Input;
 import com.cs301.dutton_boling.models.Entry;
+import com.cs301.dutton_boling.models.EntrySet;
 
 
 import javax.swing.*;
@@ -45,7 +46,7 @@ public class Main extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(file != null){
-                    List<Entry> entires = Input.buildEntries(file);
+                    EntrySet entrySet = Input.buildEntries(file);
                     System.out.println("Done");
                 }else{
 

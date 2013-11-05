@@ -11,13 +11,7 @@ public class Nominal extends Attribute {
 
     String data;
 
-    public Nominal(String name, String data) {
-        super(name);
-        this.data = data;
-    }
-
-    public Nominal(String name, String data, boolean decisionAttribute) {
-        super(name, decisionAttribute);
+    public Nominal(String data) {
         this.data = data;
     }
 
@@ -29,7 +23,6 @@ public class Nominal extends Attribute {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(this.name);
         stringBuilder.append("=");
         stringBuilder.append(this.data);
         stringBuilder.append(" ");

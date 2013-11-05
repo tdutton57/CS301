@@ -2,6 +2,7 @@ package com.cs301.dutton_boling;
 
 import com.cs301.dutton_boling.factories.EntryFactory;
 import com.cs301.dutton_boling.models.Entry;
+import com.cs301.dutton_boling.models.EntrySet;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -16,22 +17,25 @@ import java.util.List;
  */
 public class Input {
 
-    public static List<Entry> buildEntries(File file){
+    public static EntrySet buildEntries(File file){
+        EntrySet entrySet = new EntrySet();
         EntryFactory ef = new EntryFactory();
         List<Entry> entries = new ArrayList<Entry>();
+        List<String> names = new ArrayList<String>();
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
             String line;
             while (!(line = br.readLine()).startsWith("@attribute"));
             do{
                 String[] attribute = line.split(" ");
+                names.add(attribute[1]);
                 if(attribute[2].equals("numeric")){
-                    ef.add(attribute[1], EntryFactory.AttributeType.NUMERIC);
+                    ef.add(EntryFactory.AttributeType.NUMERIC);
                 }else if(attribute[2].contains("{")){
                     String strip = attribute[2].replace("{", "");
                     strip = strip.replace("}", "");
                     String[] vals = strip.split(",");
-                    ef.add(attribute[1], EntryFactory.AttributeType.NOMINAL, vals);
+                    ef.add(EntryFactory.AttributeType.NOMINAL, vals);
                 }
             }while ((line = br.readLine()).startsWith("@attribute"));
             while (!(line = br.readLine()).equals("@data"));
@@ -45,7 +49,8 @@ public class Input {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
 
-
-        return entries;
+        entrySet.setAttributeNames(names);
+        entrySet.setEntries(entries);
+        return entrySet;
     }
 }

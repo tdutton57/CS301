@@ -10,13 +10,7 @@ package com.cs301.dutton_boling.models;
 public class Binary extends Attribute {
     private Boolean data;
 
-    public Binary(String name, Boolean data) {
-        super(name);
-        this.data = data;
-    }
-
-    public Binary(String name, Boolean data, boolean decisionAttribute) {
-        super(name, decisionAttribute);
+    public Binary(Boolean data) {
         this.data = data;
     }
 
@@ -36,7 +30,6 @@ public class Binary extends Attribute {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(this.name);
         stringBuilder.append("=");
         stringBuilder.append(data.toString());
         stringBuilder.append(" ");
