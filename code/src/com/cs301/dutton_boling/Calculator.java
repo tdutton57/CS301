@@ -21,29 +21,25 @@ public class Calculator {
         return null;
     }
 
-    private List<List<Entry>> calculateCoverings(List<Entry> entries){
-        //TODO This
-        //need decision attribute
-        //
+    private List<List<Entry>> calculateCoverings(List<Entry> entries){ //This is the RICO Algorithm
+        
+        
         return null;
     }
     //Type of entry is referencing if its boolean, numerical or nominal
     private List<List<Entry>> createGrouping(List<Entry> entries, int typeOfEntry) {
-        if(typeOfEntry == 1)
+        if(attr instanceOf Binary)
         {
-            calculateBooleanCoverngs(entries);
+            List grouping = calculateBooleanGrouping(entries);
         }
-        else if(typeOfEntry == 2)
+        else if(attr.instanceOf Nominal)
         {
-            calculateNumericalCoverings(entries);
+           List grouping = calculateNominalGrouping(entries);
         }
-        else{
-            calculateNominalCoverings(entries);
+        else if{attr.instanceOf Numerical) {
+            List grouping =calculateNumericalGrouping(entries);
         }
-        //Take the decision attribute
-        //create groupings
-        //put each group into an array
-        //return the array that exists
+        return grouping;
     }
 
     private Boolean compareGrouping(List<Entry> entry1, List<Entry> entry2) {
@@ -52,26 +48,52 @@ public class Calculator {
                         //for example for the set [1,2,3,4,5] [1], [2,4,5] [3,4] are all subsets
     }
 
-    private List<List<Entry>> calculateBooleanCoverngs (List<Entry> entries) {
+    private List<List<Entry>> calculateBooleanGrouping (List<Entry> entries) {
           //for all the entries in the list of entries
           // if an entry is equal to 0 put i value in zeroArray, else put i value in oneArray
           //put arrays into one array where first value is zero and second value is one
+        new zeroArray [entries.sizeOf()];
+        for (Entry entry: entries) 
+        {
+            if(entry[i] == 0)
+                zeroArray[entries] = entry;
+            else
+                zeroArray[entries] = X;
+        }
+        //I can't figure out a good way to take the values and put them into a 2d array 
+        //put into two d array and return the array the first will be the os and the second will be the 1s
     }
 
-    private List<List<Entry>> calculateNumericalCoverings( List<Entry> entries) {
-        //for all the entries in the list of entries
-        //intalize array to contain 0
-        //if value is not equal to the first
-        //create a new array and put value
-        //keep doing that until done with array
-        //for example: values 0 0 0 0 1 1 2 2
-        //array1 would contain 0 1 2 3
-        //array 2 would contain 4 5
-        //array 3 would contain 6 7
+    private List<List<Entry>> calculateNumericalGroupings( List<Entry> entries) {
+        maximum = entries.max();
+        for(Entries entry: entries) {
+
+        }
     }
     private List<List<Entry>> calculateNominalCoverings(List<Entry> entries) {
         //for all the entries in the list of entries
         //intialize array1 to contain first value
         //if value is not equal to first value intialize second value
+        for(Entry entry: entries) {
+            if(entry[i] == "L") //when you have low or left 
+                leftlowArray[i] = i;
+                rightMediumArray[i] = X;
+                straightLargeArray[i] = X;
+            if(entry[i] == "M" || entry[i] == "R") {
+                leftlowArray[i] = X;
+                rightMediumArray[i] = i;
+                straightLargeArray[i] = X;
+            }
+            if(entry[i] == "H" || entry[i] == "L") {
+                leftlowArray[i] = X;
+                rightMediumArray[i] = X;
+                straightLargeArray[i] = i;
+            }
+            //now need to truncate each array to get rid of X's 
+            //put all the arrays to gether 0th will be low / left 1st will be right medium 2nd will be high straight 
+
+
+        }
+
     }
 }
