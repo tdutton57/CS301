@@ -108,15 +108,15 @@ public class Calculator {
         ArrayList<Entry> rightMediumArray = new ArrayList<Entry>();
         ArrayList<Entry> straightLargeArray = new ArrayList<Entry>();
         for(Entry entry: entries) {
-            if(entry[entries] == "L") //when you have low or left
-                leftlowArray[entries] = entries;
-            if(entry[i] == "M" || entry[i] == "R") {
+            if(entries[entry] == "L") //when you have low or left
+                leftlowArray[entry] = entries;
+            if(entries[entry] == "M" || entry[i] == "R") {
                 rightMediumArray[i] = i;
             }
-            if(entry[i] == "H" || entry[i] == "L") {
+            if(entries[entry] == "H" || entries[entry] == "L") {
                 straightLargeArray[i] = i;
             }
         }
-        //clean up empty values within arrays
+
     }
 }
