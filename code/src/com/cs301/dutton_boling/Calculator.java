@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
- * User: Stewart
+ * User: Stewart and Tiffani
  * Date: 10/20/13
  * Time: 9:57 PM
  * To change this template use File | Settings | File Templates.
@@ -23,16 +23,20 @@ public class Calculator {
     }
 
     private List<List<Entry>> calculateCoverings(List<Entry> entries){ //This is the RICO Algorithm
+        ///get the decision attribute
         List groups = createGrouping(entries);
-        bool subset = isProperSubset(entries,decisionAttribute);
-        //RICO Algorithm
-        //Pick the covering you prefer from the ones you found
-        //initialize E to the set of all instances;
-        //initialize rule set to empty
-        //while e contains instances do
+        Boolean subset = isProperSubset(groups, decisionAttribute);
+        if(subset) {
+            //RICO Algorithm
+            //Pick the covering you prefer from the ones you found
+            //initialize E to the set of all instances;
+            //initialize rule set to empty
+            //while e contains instances do
             //create a rule that uses attribute values from the first instances in e for each attribute in covering
-        //add the rule to the set
-        //remove instances in E covered by this rule
+            //add the rule to the set
+            //remove instances in E covered by this rule
+        }
+
         
         return null;
     }
@@ -51,11 +55,14 @@ public class Calculator {
         }
         return grouping;
     }
+    }
 
-    private Boolean compareGrouping(List<Entry> entry1, List<Entry> entry2) {
-                         //Proper subsets:
-                        // proper subsets exist when entry 1 has larger groupings than entry 2
-                        //for example for the set [1,2,3,4,5] [1], [2,4,5] [3,4] are all subsets
+    private Boolean isProperSubset(List<Entry> entry1, List<Entry> entry2) {
+           boolean subset = entry1.containsAll(entry2);
+           if(!subset)
+               return false; //TODO: It cannot be this easy to determine subsets.
+           else
+               return false;
     }
 
     private List<List<Entry>> calculateBooleanGrouping (List<Entry> entries) {
@@ -66,26 +73,21 @@ public class Calculator {
           ArrayList<Entry> oneArray = new ArrayList<Entry>();
           for (Entry entry: entries)
           {
-            if(entry[entries] == 0)
-               zeroArray[entries] = entries;
+            if(entry[entries] == 0)                         //TODO: this way makes it so that there will be empty spaces
+               zeroArray[entries] = entries;                //wonder if there is away to create
             else
                 oneArray[entries] = entries;
           }
-        //consense the arrays so that the empty spaces
-        //I can't figure out a good way to take the values and put them into a 2d array 
-        //put into two d array and return the array the first will be the os and the second will be the 1s
     }
-
     private List<List<Entry>> calculateNumericalGroupings( List<Entry> entries) {
-        List.sort(entries);                                  //TODO: create sort
-        int max = entries[entries.length - 1];              //TODO: create length
+        List sorted = List.sort(entries);                                  //TODO: create sort
+        int max = List<Entry>[sorted.length - 1];                          //TODO: create length
         int valueArray = new Int[max];
         for(i= 0; i<=max;i++)
         {
             valueArray[i] = i;
         }
         //could create a 2-d array where the first integer is the value of it and the rest is the spot in the array it
-        //exists
         List<List<Entry>> [][] numericalArray = new List<List<Entry>>[entries.length][max];
         for(int i =0; i<= max;i++){
             numericalArray[i][0] = i;
@@ -99,7 +101,7 @@ public class Calculator {
     }
     private List<List<Entry>> calculateNominalGroupings(List<Entry> entries) {
         //for all the entries in the list of entries
-        //intialize array1 to contain first value
+        //initialize array1 to contain first value
         //if value is not equal to first value intialize second value
 
         ArrayList<Entry> leftlowArray = new ArrayList<Entry>();
