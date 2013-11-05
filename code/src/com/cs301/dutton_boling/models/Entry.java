@@ -18,19 +18,6 @@ public class Entry {
         attributes.add(attribute);
     }
 
-    public void setDecision(Integer... attrs){
-        reset();
-        for(Integer attribute : attrs){
-            attributes.get(attribute).setDecisionAttribute(true);
-        }
-    }
-
-    public void reset(){
-        for(Attribute attribute : attributes){
-            attribute.setDecisionAttribute(false);
-        }
-    }
-
     public Attribute getAttribute(Integer index){
         return attributes.get(index);
     }

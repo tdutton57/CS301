@@ -4,6 +4,7 @@ import com.cs301.dutton_boling.models.Entry;
 import com.cs301.dutton_boling.models.Nominal;
 import com.cs301.dutton_boling.models.Rule;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**

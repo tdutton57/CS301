@@ -11,13 +11,7 @@ public class Numeric extends Attribute {
 
     private Integer data;
 
-    public Numeric(String name, Integer data) {
-        super(name);
-        this.data = data;
-    }
-
-    public Numeric(String name, Integer data, boolean decisionAttribute) {
-        super(name, decisionAttribute);
+    public Numeric(Integer data) {
         this.data = data;
     }
 
@@ -37,7 +31,6 @@ public class Numeric extends Attribute {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(this.name);
         stringBuilder.append("=");
         stringBuilder.append(this.data);
         stringBuilder.append(" ");
