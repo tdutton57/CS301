@@ -9,4 +9,10 @@ package com.cs301.dutton_boling.models;
  */
 public abstract class Attribute {
     public abstract Object getData();
+
+    @Override
+    public abstract boolean equals(Object obj);
+
+    @Override
+    public abstract int hashCode();
 }

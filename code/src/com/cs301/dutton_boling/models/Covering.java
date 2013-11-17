@@ -1,9 +1,6 @@
 package com.cs301.dutton_boling.models;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,7 +11,7 @@ import java.util.Map;
  */
 public class Covering {
     List<Integer> columns;
-    Map<Attribute, List<Integer>> attributeListMap = new HashMap<Attribute, List<Integer>>();
+    Map<Set<Attribute>, List<Entry>> attributeListMap = new HashMap<Set<Attribute>, List<Entry>>();
 
     public List<Integer> getColumns() {
         return columns;
@@ -24,18 +21,19 @@ public class Covering {
         this.columns = columns;
     }
 
-    public Map<Attribute, List<Integer>> getAttributeListMap() {
+    public Map<Set<Attribute>, List<Entry>> getAttributeListMap() {
         return attributeListMap;
     }
 
-    public void addEntry(Attribute attribute, Integer index){
-        if(!attributeListMap.containsKey(attribute)){
-            attributeListMap.put(attribute, new ArrayList<Integer>());
+    public void addEntry(Set<Attribute> attrbuteSet, Entry entry){
+        Boolean inMap = attributeListMap.containsKey(attrbuteSet);
+        if(!inMap){
+            attributeListMap.put(attrbuteSet, new ArrayList<Entry>());
         }
-        List<Integer> entries = attributeListMap.get(attribute);
-        if(entries.contains(index)){
+        List<Entry> entries = attributeListMap.get(attrbuteSet);
+        if(entries.contains(entry)){
             throw new IllegalStateException("Index already listed");
         }
-        entries.add(index);
+        entries.add(entry);
     }
 }

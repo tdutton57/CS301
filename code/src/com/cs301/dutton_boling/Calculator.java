@@ -1,11 +1,8 @@
 package com.cs301.dutton_boling;
 
-import com.cs301.dutton_boling.models.Entry;
-import com.cs301.dutton_boling.models.Nominal;
-import com.cs301.dutton_boling.models.Rule;
+import com.cs301.dutton_boling.models.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,108 +13,102 @@ import java.util.List;
  */
 public class Calculator {
 
-    public List<Rule> calculateRules(List<Entry> entries){
-        List<List<Entry>> coverings = calculateCoverings(entries);
+    public static List<Rule> calculateRules(EntrySet entries) {
+        List<Covering> coverings = calculateCoverings(entries);
         //TODO Iterate through coverings and calculate rules
 
+        System.out.println("Done");
         return null;
     }
 
-    private List<List<Entry>> calculateCoverings(List<Entry> entries){ //This is the RICO Algorithm
-        ///get the decision attribute
-        List groups = createGrouping(entries);
-        Boolean subset = isProperSubset(groups, decisionAttribute);
-        if(subset) {
-            //RICO Algorithm
-            //Pick the covering you prefer from the ones you found
-            //initialize E to the set of all instances;
-            //initialize rule set to empty
-            //while e contains instances do
-            //create a rule that uses attribute values from the first instances in e for each attribute in covering
-            //add the rule to the set
-            //remove instances in E covered by this rule
+    private static List<Covering> calculateCoverings(EntrySet entries) { //This is the RICO Algorithm
+        List<Covering> coverings = new ArrayList<Covering>();
+        Set<Integer> attributeColumns = new HashSet<Integer>();
+        for (int i = 0; i < entries.getAttributeCount(); i++) {
+            attributeColumns.add(i);
         }
 
-        
-        return null;
-    }
-    //Type of entry is referencing if its boolean, numerical or nominal
-    private List<List<Entry>> createGrouping(List<Entry> entries) {
-        if(attr instanceOf Binary)
-        {
-            List grouping = calculateBooleanGrouping(entries);
-        }
-        else if(attr.instanceOf Nominal)
-        {
-           List grouping = calculateNominalGroupings(entries);
-        }
-        else if{attr.instanceOf Numerical) {
-            List grouping =calculateNumericalGroupings(entries);
-        }
-        return grouping;
-    }
-    }
+        Set<Set<Integer>> groupings = powerSet(attributeColumns);
 
-    private Boolean isProperSubset(List<Entry> entry1, List<Entry> entry2) {
-           boolean subset = entry1.containsAll(entry2);
-           if(!subset)
-               return false; //TODO: It cannot be this easy to determine subsets.
-           else
-               return false;
-    }
-
-    private List<List<Entry>> calculateBooleanGrouping (List<Entry> entries) {
-          //for all the entries in the list of entries
-          // if an entry is equal to 0 put i value in zeroArray, else put i value in oneArray
-          //put arrays into one array where first value is zero and second value is one
-          ArrayList<Entry> zeroArray = new ArrayList<Entry>();
-          ArrayList<Entry> oneArray = new ArrayList<Entry>();
-          for (Entry entry: entries)
-          {
-            if(entry[entries] == 0)                         //TODO: this way makes it so that there will be empty spaces
-               zeroArray[entries] = entries;                //wonder if there is away to create
-            else
-                oneArray[entries] = entries;
-          }
-    }
-    private List<List<Entry>> calculateNumericalGroupings( List<Entry> entries) {
-        List sorted = List.sort(entries);                                  //TODO: create sort
-        int max = List<Entry>[sorted.length - 1];                          //TODO: create length
-        int valueArray = new Int[max];
-        for(i= 0; i<=max;i++)
-        {
-            valueArray[i] = i;
-        }
-        //could create a 2-d array where the first integer is the value of it and the rest is the spot in the array it
-        List<List<Entry>> [][] numericalArray = new List<List<Entry>>[entries.length][max];
-        for(int i =0; i<= max;i++){
-            numericalArray[i][0] = i;
-            for(int k=0;k<=entries.length;k++){
-                if(enteries[i] == i){
-                    numericalArray[i][k] = k;
+        for (Set<Integer> grouping : groupings) {
+            Covering covering = new Covering();
+            covering.setColumns(new ArrayList<Integer>(grouping));
+            for (Entry entry : entries.getEntries()) {
+                Set<Attribute> attributes = new HashSet<Attribute>();
+                for (Integer i : grouping) {
+                    attributes.add(entry.getAttribute(i));
                 }
+                covering.addEntry(attributes, entry);
             }
-        }
-        return numericalArray;
-    }
-    private List<List<Entry>> calculateNominalGroupings(List<Entry> entries) {
-        //for all the entries in the list of entries
-        //initialize array1 to contain first value
-        //if value is not equal to first value intialize second value
-
-        ArrayList<Entry> leftlowArray = new ArrayList<Entry>();
-        ArrayList<Entry> rightMediumArray = new ArrayList<Entry>();
-        ArrayList<Entry> straightLargeArray = new ArrayList<Entry>();
-        for(Entry entry: entries) {
-            if(entries[entry] == "L") //when you have low or left
-                leftlowArray[entry] = entries;
-            if(entries[entry] == "M" || entry[i] == "R") {
-                rightMediumArray[i] = i;
-            }
-            if(entries[entry] == "H" || entries[entry] == "L") {
-                straightLargeArray[i] = i;
-            }
+            coverings.add(covering);
         }
 
+
+        return validCoverings(coverings, entries.getDecisionAttributes());
     }
+
+    private static List<Covering> validCoverings(List<Covering> coverings, List<Integer> decisionAttributes) {
+        //Get the decsision attribute covering from the list
+        Covering decision = null;
+        Set<Integer> dec = new HashSet<Integer>();
+        dec.addAll(decisionAttributes);
+        Set<Set<Entry>> decisionEntrySet = new HashSet<Set<Entry>>();
+
+        for (Covering covering : coverings) {
+            Set<Integer> cover = new HashSet<Integer>();
+            cover.addAll(covering.getColumns());
+            if (dec.equals(cover)) {
+                decision = covering;
+            }
+        }
+
+        coverings.remove(decision);
+
+        List<Covering> invalidCoverings = new ArrayList<Covering>();
+
+
+        for(Set<Attribute> attributeSet : decision.getAttributeListMap().keySet()){
+            Set<Entry> ent = new HashSet<Entry>();
+            ent.addAll(decision.getAttributeListMap().get(attributeSet));
+            decisionEntrySet.add(ent);
+        }
+
+        for (Covering covering : coverings){
+            Set<Set<Entry>> entrySet = new HashSet<Set<Entry>>();
+            for(Set<Attribute> attributeSet : covering.getAttributeListMap().keySet()){
+                Set<Entry> ent = new HashSet<Entry>();
+                ent.addAll(covering.getAttributeListMap().get(attributeSet));
+                entrySet.add(ent);
+            }
+            if(!decisionEntrySet.equals(entrySet)){
+                invalidCoverings.add(covering);
+            }
+        }
+
+
+       coverings.removeAll(invalidCoverings);
+
+        return coverings;
+    }
+
+    public static Set<Set<Integer>> powerSet(Set<Integer> originalSet) {
+        Set<Set<Integer>> sets = new HashSet<Set<Integer>>();
+        if (originalSet.isEmpty()) {
+            sets.add(new HashSet<Integer>());
+            return sets;
+        }
+        List<Integer> list = new ArrayList<Integer>(originalSet);
+        Integer head = list.get(0);
+        Set<Integer> rest = new HashSet<Integer>(list.subList(1, list.size()));
+        for (Set<Integer> set : powerSet(rest)) {
+            Set<Integer> newSet = new HashSet<Integer>();
+            newSet.add(head);
+            newSet.addAll(set);
+            sets.add(newSet);
+            sets.add(set);
+        }
+        return sets;
+    }
+
+
 }

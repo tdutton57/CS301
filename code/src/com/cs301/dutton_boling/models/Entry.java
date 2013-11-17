@@ -10,7 +10,7 @@ import java.util.List;
  * Time: 8:56 PM
  * To change this template use File | Settings | File Templates.
  */
-public class Entry {
+public class Entry implements Comparable{
 
     private List<Attribute> attributes = new ArrayList<Attribute>();
 
@@ -28,5 +28,10 @@ public class Entry {
             returnable.add(getAttribute(index));
         }
         return returnable;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return 0;
     }
 }

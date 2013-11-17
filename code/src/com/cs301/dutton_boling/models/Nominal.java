@@ -31,9 +31,14 @@ public class Nominal extends Attribute {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof  String){
-            return data.equals(obj);
+        if(obj instanceof  Nominal){
+            return data.equals(((Nominal) obj).getData());
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return data.hashCode();
     }
 }

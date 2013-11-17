@@ -15,14 +15,14 @@ public class Binary extends Attribute {
     }
 
     @Override
-    public Object getData() {
+    public Boolean getData() {
         return data;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof  Boolean){
-            return data.equals(obj);
+        if(obj instanceof  Binary){
+            return data.equals(((Binary) obj).getData());
         }
         return false;
     }
@@ -34,5 +34,11 @@ public class Binary extends Attribute {
         stringBuilder.append(data.toString());
         stringBuilder.append(" ");
         return stringBuilder.toString();
+    }
+
+
+    @Override
+    public int hashCode() {
+        return data.hashCode();
     }
 }

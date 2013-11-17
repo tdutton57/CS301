@@ -22,8 +22,8 @@ public class Numeric extends Attribute {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof  Integer){
-            return data.equals(obj);
+        if(obj instanceof  Numeric){
+            return data.equals(((Numeric)obj).getData());
         }
         return false;
     }
@@ -35,5 +35,11 @@ public class Numeric extends Attribute {
         stringBuilder.append(this.data);
         stringBuilder.append(" ");
         return stringBuilder.toString();
+    }
+
+
+    @Override
+    public int hashCode() {
+        return data.hashCode();
     }
 }
