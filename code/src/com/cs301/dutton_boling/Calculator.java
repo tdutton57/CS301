@@ -15,7 +15,33 @@ public class Calculator {
 
     public static List<Rule> calculateRules(EntrySet entries) {
         List<Covering> coverings = calculateCoverings(entries);
-        //TODO Iterate through coverings and calculate rules
+        //get the decision attribute.
+        List<Covering> decisionAttributes = //TODO: get the decision attribute
+        
+        //create a list of points 
+        List<Point> point;
+
+        for(List<Covering> cover : coverings) { 
+            //make the first point in each represent the column
+            //ex the first point in the list will have the first value be a -1 and the second value be the column
+
+            //point[covering][0] = {-1,cover} 
+
+
+           for() // create a for loop to loop over each row
+            //if it already exists as a point get rid of it 
+            point[covering].x = coverings[covering][i];
+            point[covering].y = decisionAttribute[covering][i];
+            //this should create an x and y point where if x then y 
+            //get rid of this point. 
+            
+
+
+
+
+
+
+        }
 
         System.out.println("Done");
         return null;
@@ -118,6 +144,9 @@ public class Calculator {
 
 If the decision attribute is just 1 attribute
     put the attribute in the front of the list of list of list
+else
+    combine the set into a single set
+
     for loop
         compare the decision attribute to the attribute in the loop
         if they are the same / is a sub set of 
