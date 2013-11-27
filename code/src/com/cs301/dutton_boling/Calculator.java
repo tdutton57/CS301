@@ -112,3 +112,25 @@ public class Calculator {
 
 
 }
+
+
+/*Potential Covering Algorithm
+
+If the decision attribute is just 1 attribute
+    put the attribute in the front of the list of list of list
+    for loop
+        compare the decision attribute to the attribute in the loop
+        if they are the same / is a sub set of 
+            put in the rules list 
+            delete attribute column
+    //that gets rid of all the singls
+    for loop
+        for loop
+            compare the second and third columns to the first (decision)
+            if subset
+                put in rule list
+                delete
+    once you've done this it should give you all the combinations of rules. 
+
+
+*/
