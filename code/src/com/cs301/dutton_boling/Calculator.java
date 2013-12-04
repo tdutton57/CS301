@@ -1,6 +1,10 @@
 package com.cs301.dutton_boling;
 
-import com.cs301.dutton_boling.models.*;
+import com.cs301.dutton_boling.models.Attribute;
+import com.cs301.dutton_boling.models.Covering;
+import com.cs301.dutton_boling.models.Entry;
+import com.cs301.dutton_boling.models.EntrySet;
+import com.cs301.dutton_boling.models.Rule;
 
 import java.util.*;
 
@@ -14,9 +18,27 @@ import java.util.*;
 public class Calculator {
 
     public static List<Rule> calculateRules(EntrySet entries) {
-        List<Covering> coverings = calculateCoverings(entries);
+        /* List<Covering> coverings = calculateCoverings(entries);
 
+        //append all of the decision attributes to a list
+        List<Integer> decisionAttributes = entries.getDecisionAttributes();
 
+      while(coverings.size() == 0) {
+      //for(int i = 1; i<HEIGHT;i++) { //loop over the entries
+      //  for(int j =0; j<WIDTH;j++) {
+
+          if(entries.getDecisionAttributes().contains(decisionAttributes)) {
+            //String x = String.format("if {%s} is equal to: %2d ", entries[0][j], entires[i][j]);
+            String y;
+            for(int k=0;k<decisionAttributes.size();k++)
+            {
+             // int temp = decisionAttributes[k];
+                String temp1 = String.format("{%2d} is equal to: %s",entries[0][temp],entries[i][temp]);
+                y = y.append(temp1);
+            }
+          }
+          //delete attribute from the set;
+        }        */
 
 
         System.out.println("Done");
