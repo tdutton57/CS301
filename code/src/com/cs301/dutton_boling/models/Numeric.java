@@ -9,23 +9,13 @@ package com.cs301.dutton_boling.models;
  */
 public class Numeric extends Attribute {
 
-    private Integer data;
-
     public Numeric(Integer data) {
         this.data = data;
     }
 
     @Override
     public Integer getData() {
-        return data;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(obj instanceof  Numeric){
-            return data.equals(((Numeric)obj).getData());
-        }
-        return false;
+        return (Integer) data;
     }
 
     @Override
@@ -35,11 +25,5 @@ public class Numeric extends Attribute {
         stringBuilder.append(this.data);
         stringBuilder.append(" ");
         return stringBuilder.toString();
-    }
-
-
-    @Override
-    public int hashCode() {
-        return data.hashCode();
     }
 }

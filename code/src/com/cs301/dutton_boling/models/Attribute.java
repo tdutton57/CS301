@@ -8,11 +8,23 @@ package com.cs301.dutton_boling.models;
  * To change this template use File | Settings | File Templates.
  */
 public abstract class Attribute {
+
+    protected Object data;
     public abstract Object getData();
 
     @Override
-    public abstract boolean equals(Object obj);
+    public boolean equals(Object obj) {
+        if(data != null && ((Attribute)obj).getData() != null){
+            return data.equals(((Attribute)obj).getData());
+        }
+        return false;
+    }
 
     @Override
-    public abstract int hashCode();
+    public int hashCode() {
+        if(data == null){
+            return 0;
+        }
+        return data.hashCode();
+    }
 }

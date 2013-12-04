@@ -15,33 +15,9 @@ public class Calculator {
 
     public static List<Rule> calculateRules(EntrySet entries) {
         List<Covering> coverings = calculateCoverings(entries);
-        //get the decision attribute.
-        List<Covering> decisionAttributes = //TODO: get the decision attribute
-        
-        //create a list of points 
-        List<Point> point;
-
-        for(List<Covering> cover : coverings) { 
-            //make the first point in each represent the column
-            //ex the first point in the list will have the first value be a -1 and the second value be the column
-
-            //point[covering][0] = {-1,cover} 
-
-
-           for() // create a for loop to loop over each row
-            //if it already exists as a point get rid of it 
-            point[covering].x = coverings[covering][i];
-            point[covering].y = decisionAttribute[covering][i];
-            //this should create an x and y point where if x then y 
-            //get rid of this point. 
-            
 
 
 
-
-
-
-        }
 
         System.out.println("Done");
         return null;
@@ -50,13 +26,13 @@ public class Calculator {
     private static List<Covering> calculateCoverings(EntrySet entries) { //This is the RICO Algorithm
         System.out.println("Starting covering");
         List<Covering> coverings = new ArrayList<Covering>();
-        Set<Integer> attributeColumns = new HashSet<Integer>();
+        List<Integer> attributeColumns = new ArrayList<Integer>();
         for (int i = 0; i < entries.getAttributeCount(); i++) {
             attributeColumns.add(i);
         }
 
         long startTime = System.currentTimeMillis();
-        Set<Set<Integer>> groupings = powerSet(attributeColumns);
+        Set<Set<Integer>> groupings = collectSets(attributeColumns, 3);
         System.out.println("Recursive Time: " + (System.currentTimeMillis() - startTime));
 
         for (Set<Integer> grouping : groupings) {
@@ -121,24 +97,33 @@ public class Calculator {
         return coverings;
     }
 
-    public static Set<Set<Integer>> powerSet(Set<Integer> originalSet) {
-        Set<Set<Integer>> sets = new HashSet<Set<Integer>>();
-        if (originalSet.isEmpty()) {
-            sets.add(new HashSet<Integer>());
-            return sets;
+
+
+    private static Set<Set<Integer>> collectSets(List<Integer> originalSet, int n){
+        Set<Set<Integer>> solution = new HashSet<Set<Integer>>();
+        for(int i = 1; i <= n; i++){
+            getSubsets(originalSet, i, 0, new HashSet<Integer>(), solution);
         }
-        List<Integer> list = new ArrayList<Integer>(originalSet);
-        Integer head = list.get(0);
-        Set<Integer> rest = new HashSet<Integer>(list.subList(1, list.size()));
-        for (Set<Integer> set : powerSet(rest)) {
-            Set<Integer> newSet = new HashSet<Integer>();
-            newSet.add(head);
-            newSet.addAll(set);
-            sets.add(newSet);
-            sets.add(set);
-        }
-        return sets;
+
+        return solution;
     }
+
+    private static void getSubsets(List<Integer> originalSet, int n, int index, Set<Integer> currentSet, Set<Set<Integer>> solution){
+       if(currentSet.size() == n){
+           solution.add(new HashSet<Integer>(currentSet));
+           return;
+       }
+
+        if(index == originalSet.size())
+            return;
+        Integer x = originalSet.get(index);
+        currentSet.add(x);
+        getSubsets(originalSet, n, index+1, currentSet, solution);
+        currentSet.remove(x);
+        getSubsets(originalSet, n, index+1, currentSet, solution);
+    }
+
+
 
 
 

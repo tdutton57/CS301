@@ -9,15 +9,13 @@ package com.cs301.dutton_boling.models;
  */
 public class Nominal extends Attribute {
 
-    String data;
-
     public Nominal(String data) {
         this.data = data;
     }
 
     @Override
     public String getData() {
-        return data;
+        return (String) data;
     }
 
     @Override
@@ -27,18 +25,5 @@ public class Nominal extends Attribute {
         stringBuilder.append(this.data);
         stringBuilder.append(" ");
         return stringBuilder.toString();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(obj instanceof  Nominal){
-            return data.equals(((Nominal) obj).getData());
-        }
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return data.hashCode();
     }
 }
