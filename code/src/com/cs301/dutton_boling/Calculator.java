@@ -48,15 +48,19 @@ public class Calculator {
     }
 
     private static List<Covering> calculateCoverings(EntrySet entries) { //This is the RICO Algorithm
+        System.out.println("Starting covering");
         List<Covering> coverings = new ArrayList<Covering>();
         Set<Integer> attributeColumns = new HashSet<Integer>();
         for (int i = 0; i < entries.getAttributeCount(); i++) {
             attributeColumns.add(i);
         }
 
+        long startTime = System.currentTimeMillis();
         Set<Set<Integer>> groupings = powerSet(attributeColumns);
+        System.out.println("Recursive Time: " + (System.currentTimeMillis() - startTime));
 
         for (Set<Integer> grouping : groupings) {
+            System.out.println("Calculating covering for: " + grouping.toString());
             Covering covering = new Covering();
             covering.setColumns(new ArrayList<Integer>(grouping));
             for (Entry entry : entries.getEntries()) {
@@ -69,7 +73,7 @@ public class Calculator {
             coverings.add(covering);
         }
 
-
+        System.out.println("Validating Coverings");
         return validCoverings(coverings, entries.getDecisionAttributes());
     }
 
@@ -93,27 +97,27 @@ public class Calculator {
         List<Covering> invalidCoverings = new ArrayList<Covering>();
 
 
-        for(Set<Attribute> attributeSet : decision.getAttributeListMap().keySet()){
+        for (Set<Attribute> attributeSet : decision.getAttributeListMap().keySet()) {
             Set<Entry> ent = new HashSet<Entry>();
             ent.addAll(decision.getAttributeListMap().get(attributeSet));
             decisionEntrySet.add(ent);
         }
 
-        for (Covering covering : coverings){
+        for (Covering covering : coverings) {
             Set<Set<Entry>> entrySet = new HashSet<Set<Entry>>();
-            for(Set<Attribute> attributeSet : covering.getAttributeListMap().keySet()){
+            for (Set<Attribute> attributeSet : covering.getAttributeListMap().keySet()) {
                 Set<Entry> ent = new HashSet<Entry>();
                 ent.addAll(covering.getAttributeListMap().get(attributeSet));
                 entrySet.add(ent);
             }
-            if(!decisionEntrySet.equals(entrySet)){
+            if (!decisionEntrySet.equals(entrySet)) {
                 invalidCoverings.add(covering);
             }
         }
 
 
-       coverings.removeAll(invalidCoverings);
-
+        coverings.removeAll(invalidCoverings);
+        System.out.println("Minimizing Coverings");
         return coverings;
     }
 
@@ -135,6 +139,7 @@ public class Calculator {
         }
         return sets;
     }
+
 
 
 }
