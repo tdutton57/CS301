@@ -1,0 +1,15 @@
+@relation twoDecisionNominal
+@attribute a {L,M,H}
+@attribute b {L,M,H}
+@attribute c {L,M,H}
+@attribute d {L,M,H}
+@attribute f {L,M,H}
+@attribute g {L,M,H}
+
+@data
+L,L,L,L,L,L
+L,L,H,L,H,H
+M,M,M,M,M,M
+L,L,H,L,H,L
+L,H,H,H,L,H
+H,H,H,H,H,H
