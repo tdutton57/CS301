@@ -22,14 +22,17 @@ public class EntryFactory {
     public enum AttributeType { NOMINAL, BINARY, NUMERIC}
 
     private class AttributeBuilder{
+        String name;
         AttributeType attributeType;
         List<String> nominals = null;
 
-        private AttributeBuilder(AttributeType attributeType) {
+        private AttributeBuilder(String name, AttributeType attributeType) {
+            this.name = name;
             this.attributeType = attributeType;
         }
 
-        private AttributeBuilder(AttributeType attributeType, String... noms) {
+        private AttributeBuilder(String name, AttributeType attributeType, String... noms) {
+            this.name = name;
             this.attributeType = attributeType;
             this.nominals = Arrays.asList(noms);
         }
@@ -37,19 +40,19 @@ public class EntryFactory {
 
     List<AttributeBuilder> attributes = new ArrayList<AttributeBuilder>();
 
-    public void add(AttributeType attributeType){
+    public void add(String name, AttributeType attributeType){
         if(attributeType == AttributeType.NOMINAL){
            // throw new WrongMethodTypeException("No values were provided for type nominal");
         }
-        attributes.add(new AttributeBuilder(attributeType));
+        attributes.add(new AttributeBuilder(name, attributeType));
     }
 
-    public void add(AttributeType attributeType, String... values){
+    public void add(String name, AttributeType attributeType, String... values){
         if (attributeType == AttributeType.BINARY || attributeType == AttributeType.NUMERIC){
             throw new IllegalStateException("Cannot provide nominal values for non-nominal attribute");
         }
 
-        attributes.add(new AttributeBuilder(attributeType, values));
+        attributes.add(new AttributeBuilder(name, attributeType, values));
     }
 
 
@@ -61,16 +64,16 @@ public class EntryFactory {
             switch (attributeBuilder.attributeType){
                 case NOMINAL:
                     if(attributeBuilder.nominals.contains(data)){
-                        returnable.add(new Nominal(data.equals("?") ? null : data));
+                        returnable.add(new Nominal(attributeBuilder.name, data.equals("?") ? null : data));
                     }else {
-                        throw new IllegalStateException("Innappropriate Type Passed");
+                        throw new IllegalStateException("Inappropriate Type Passed");
                     }
                     break;
                 case BINARY:
-                    returnable.add(new Binary(data.equals("?") ? null : Boolean.parseBoolean(data)));
+                    returnable.add(new Binary(attributeBuilder.name, data.equals("?") ? null : Boolean.parseBoolean(data)));
                     break;
                 case NUMERIC:
-                    returnable.add(new Numeric(data.equals("?") ? null : Integer.parseInt(data)));
+                    returnable.add(new Numeric(attributeBuilder.name, data.equals("?") ? null : Integer.parseInt(data)));
                     break;
             }
         }

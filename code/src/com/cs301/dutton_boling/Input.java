@@ -30,12 +30,12 @@ public class Input {
                 String[] attribute = line.split(" ");
                 names.add(attribute[1]);
                 if(attribute[2].equals("numeric")){
-                    ef.add(EntryFactory.AttributeType.NUMERIC);
+                    ef.add(attribute[1], EntryFactory.AttributeType.NUMERIC);
                 }else if(attribute[2].contains("{")){
                     String strip = attribute[2].replace("{", "");
                     strip = strip.replace("}", "");
                     String[] vals = strip.split(",");
-                    ef.add(EntryFactory.AttributeType.NOMINAL, vals);
+                    ef.add(attribute[1], EntryFactory.AttributeType.NOMINAL, vals);
                 }
             }while ((line = br.readLine()).startsWith("@attribute"));
             while (!(line = br.readLine()).equals("@data"));

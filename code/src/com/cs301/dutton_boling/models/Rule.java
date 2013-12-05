@@ -23,7 +23,10 @@ public class Rule {
 
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj);    //To change body of overridden methods use File | Settings | File Templates.
+        if(!(obj instanceof  Rule)){
+            return false;
+        }
+        return ((Rule) obj).getAnecedents().equals(anecedents) && ((Rule) obj).getConsequents().equals(consequents);
     }
 
     @Override
@@ -41,5 +44,13 @@ public class Rule {
         }
         stringBuilder.setLength(stringBuilder.length() - 5);
         return stringBuilder.toString();
+    }
+
+    public Set<Attribute> getAnecedents() {
+        return anecedents;
+    }
+
+    public Set<Attribute> getConsequents() {
+        return consequents;
     }
 }

@@ -9,7 +9,8 @@ package com.cs301.dutton_boling.models;
  */
 public class Nominal extends Attribute {
 
-    public Nominal(String data) {
+    public Nominal(String name, String data) {
+        super(name);
         this.data = data;
     }
 

@@ -17,7 +17,10 @@ import java.util.*;
  */
 public class Calculator {
 
-    public static List<Rule> calculateRules(EntrySet entries) {
+    private static int maxCoveringSize = -1;
+
+    public static Map<Covering, List<Rule>> calculateRules(EntrySet entries, int size) {
+        maxCoveringSize = size;
         List<Covering> coverings = calculateCoverings(entries);
 
         //append all of the decision attributes to a list
@@ -28,22 +31,18 @@ public class Calculator {
             coveringListMap.put(covering, rules);
             Map<Set<Attribute>, List<Entry>> setListMap = covering.getAttributeListMap();
             Set<Set<Attribute>> keySet = setListMap.keySet();
-            for(Set<Attribute> key : keySet){
+            for (Set<Attribute> key : keySet) {
                 List<Entry> entryList = setListMap.get(key);
-                for(Entry entry : entryList){
-
+                for (Entry entry : entryList) {
                     Set<Attribute> consequents = new HashSet<Attribute>(entry.getAttributes(decisionAttributes));
                     Rule rule = new Rule(key, consequents);
-                    rules.add(rule);
-
+                    if (!rules.contains(rule)) {
+                        rules.add(rule);
+                    }
                 }
             }
-
         }
-
-
-        System.out.println("Done with coverings");
-        return null;
+        return coveringListMap;
     }
 
     private static List<Covering> calculateCoverings(EntrySet entries) { //This is the RICO Algorithm
@@ -55,7 +54,7 @@ public class Calculator {
         }
 
         long startTime = System.currentTimeMillis();
-        Set<Set<Integer>> partitions = collectSets(attributeColumns, 3);
+        Set<Set<Integer>> partitions = collectSets(attributeColumns, maxCoveringSize);
         System.out.println("Recursive Time: " + (System.currentTimeMillis() - startTime));
         //Removing partitions with decision attributes in them
         System.out.println("Size before: " + partitions.size());
@@ -83,11 +82,11 @@ public class Calculator {
     private static void vailidatePartitions(EntrySet entries, Set<Set<Integer>> partitions) {
         Set<Integer> decAttr = new HashSet<Integer>(entries.getDecisionAttributes());
         List<Set<Integer>> invalidPartitions = new LinkedList<Set<Integer>>();
-        for(Set<Integer> partition: partitions){
+        for (Set<Integer> partition : partitions) {
             Set<Integer> temp = new HashSet<Integer>(decAttr);
             temp.retainAll(partition);
             boolean disjoint = temp.isEmpty();
-            if(!disjoint){
+            if (!disjoint) {
                 invalidPartitions.add(partition);
             }
         }
@@ -97,7 +96,7 @@ public class Calculator {
     }
 
     private static List<Covering> validCoverings(EntrySet entries, List<Covering> coverings, List<Integer> decisionAttributes) {
-        //Get the decsision attribute covering from the list
+        //Get the decision attribute covering from the list
         Covering decision = new Covering();
         decision.setColumns(new ArrayList<Integer>(decisionAttributes));
         for (Entry entry : entries.getEntries()) {
@@ -159,43 +158,4 @@ public class Calculator {
         currentSet.remove(x);
         getSubsets(originalSet, n, index + 1, currentSet, solution);
     }
-
-    private <T> List<T> intersection(List<T> list1, List<T> list2) {
-        List<T> list = new ArrayList<T>();
-
-        for (T t : list1) {
-            if (list2.contains(t)) {
-                list.add(t);
-            }
-        }
-
-        return list;
-    }
-
-
 }
-
-
-/*Potential Covering Algorithm
-
-If the decision attribute is just 1 attribute
-    put the attribute in the front of the list of list of list
-else
-    combine the set into a single set
-
-    for loop
-        compare the decision attribute to the attribute in the loop
-        if they are the same / is a sub set of 
-            put in the rules list 
-            delete attribute column
-    //that gets rid of all the singls
-    for loop
-        for loop
-            compare the second and third columns to the first (decision)
-            if subset
-                put in rule list
-                delete
-    once you've done this it should give you all the combinations of rules. 
-
-
-*/

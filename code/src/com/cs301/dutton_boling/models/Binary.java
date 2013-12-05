@@ -10,7 +10,8 @@ package com.cs301.dutton_boling.models;
 public class Binary extends Attribute {
 
 
-    public Binary(Boolean data) {
+    public Binary(String name, Boolean data) {
+        super(name);
         this.data = data;
     }
 

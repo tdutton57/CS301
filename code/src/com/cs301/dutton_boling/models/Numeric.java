@@ -9,7 +9,8 @@ package com.cs301.dutton_boling.models;
  */
 public class Numeric extends Attribute {
 
-    public Numeric(Integer data) {
+    public Numeric(String name, Integer data) {
+        super(name);
         this.data = data;
     }
 

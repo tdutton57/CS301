@@ -36,4 +36,15 @@ public class Covering {
         }
         entries.add(entry);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("{");
+        for(Set<Attribute> attributes : attributeListMap.keySet()){
+            builder.append(attributes.toString());
+        }
+        builder.append("}");
+        return builder.toString();    //To change body of overridden methods use File | Settings | File Templates.
+    }
 }
