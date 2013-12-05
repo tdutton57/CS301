@@ -18,13 +18,4 @@ public class Binary extends Attribute {
     public Boolean getData() {
         return (Boolean)data;
     }
-
-    @Override
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("=");
-        stringBuilder.append(data.toString());
-        stringBuilder.append(" ");
-        return stringBuilder.toString();
-    }
 }

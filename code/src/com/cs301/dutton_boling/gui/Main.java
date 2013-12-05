@@ -23,6 +23,11 @@ public class Main extends JDialog {
     private File file = null;
 
     public Main() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         setContentPane(contentPane);
         setModal(true);
         openButton.addActionListener(new ActionListener() {
@@ -72,6 +77,7 @@ public class Main extends JDialog {
         Main dialog = new Main();
         dialog.pack();
         dialog.setVisible(true);
+
         System.exit(0);
     }
 }

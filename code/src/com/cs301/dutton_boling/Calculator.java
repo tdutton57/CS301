@@ -18,11 +18,13 @@ import java.util.*;
 public class Calculator {
 
     public static List<Rule> calculateRules(EntrySet entries) {
-        /* List<Covering> coverings = calculateCoverings(entries);
+
+        List<Covering> coverings = calculateCoverings(entries);
 
         //append all of the decision attributes to a list
         List<Integer> decisionAttributes = entries.getDecisionAttributes();
 
+      /*
       while(coverings.size() == 0) {
       //for(int i = 1; i<HEIGHT;i++) { //loop over the entries
       //  for(int j =0; j<WIDTH;j++) {
@@ -54,16 +56,20 @@ public class Calculator {
         }
 
         long startTime = System.currentTimeMillis();
-        Set<Set<Integer>> groupings = collectSets(attributeColumns, 3);
+        Set<Set<Integer>> partitions = collectSets(attributeColumns, 3);
         System.out.println("Recursive Time: " + (System.currentTimeMillis() - startTime));
+        //Removing partitions with decision attributes in them
+        System.out.println("Size before: " + partitions.size());
+        vailidatePartitions(entries, partitions);
+        System.out.println("Size after: " + partitions.size());
 
-        for (Set<Integer> grouping : groupings) {
-            System.out.println("Calculating covering for: " + grouping.toString());
+
+        for (Set<Integer> partition : partitions) {
             Covering covering = new Covering();
-            covering.setColumns(new ArrayList<Integer>(grouping));
+            covering.setColumns(new ArrayList<Integer>(partition));
             for (Entry entry : entries.getEntries()) {
                 Set<Attribute> attributes = new HashSet<Attribute>();
-                for (Integer i : grouping) {
+                for (Integer i : partition) {
                     attributes.add(entry.getAttribute(i));
                 }
                 covering.addEntry(attributes, entry);
@@ -72,26 +78,37 @@ public class Calculator {
         }
 
         System.out.println("Validating Coverings");
-        return validCoverings(coverings, entries.getDecisionAttributes());
+        return validCoverings(entries, coverings, entries.getDecisionAttributes());
     }
 
-    private static List<Covering> validCoverings(List<Covering> coverings, List<Integer> decisionAttributes) {
-        //Get the decsision attribute covering from the list
-        Covering decision = null;
-        Set<Integer> dec = new HashSet<Integer>();
-        dec.addAll(decisionAttributes);
-        Set<Set<Entry>> decisionEntrySet = new HashSet<Set<Entry>>();
-
-        for (Covering covering : coverings) {
-            Set<Integer> cover = new HashSet<Integer>();
-            cover.addAll(covering.getColumns());
-            if (dec.equals(cover)) {
-                decision = covering;
+    private static void vailidatePartitions(EntrySet entries, Set<Set<Integer>> partitions) {
+        Set<Integer> decAttr = new HashSet<Integer>(entries.getDecisionAttributes());
+        List<Set<Integer>> invalidPartitions = new LinkedList<Set<Integer>>();
+        for(Set<Integer> partition: partitions){
+            Set<Integer> temp = new HashSet<Integer>(decAttr);
+            temp.retainAll(partition);
+            boolean disjoint = temp.isEmpty();
+            if(!disjoint){
+                invalidPartitions.add(partition);
             }
         }
 
-        coverings.remove(decision);
+        partitions.removeAll(invalidPartitions);
 
+    }
+
+    private static List<Covering> validCoverings(EntrySet entries, List<Covering> coverings, List<Integer> decisionAttributes) {
+        //Get the decsision attribute covering from the list
+        Covering decision = new Covering();
+        decision.setColumns(new ArrayList<Integer>(decisionAttributes));
+        for (Entry entry : entries.getEntries()) {
+            Set<Attribute> attributes = new HashSet<Attribute>();
+            for (Integer i : decisionAttributes) {
+                attributes.add(entry.getAttribute(i));
+            }
+            decision.addEntry(attributes, entry);
+        }
+        Set<Set<Entry>> decisionEntrySet = new HashSet<Set<Entry>>();
         List<Covering> invalidCoverings = new ArrayList<Covering>();
 
 

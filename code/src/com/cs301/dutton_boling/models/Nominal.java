@@ -17,13 +17,4 @@ public class Nominal extends Attribute {
     public String getData() {
         return (String) data;
     }
-
-    @Override
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("=");
-        stringBuilder.append(this.data);
-        stringBuilder.append(" ");
-        return stringBuilder.toString();
-    }
 }

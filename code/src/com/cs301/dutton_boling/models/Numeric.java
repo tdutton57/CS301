@@ -17,13 +17,4 @@ public class Numeric extends Attribute {
     public Integer getData() {
         return (Integer) data;
     }
-
-    @Override
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("=");
-        stringBuilder.append(this.data);
-        stringBuilder.append(" ");
-        return stringBuilder.toString();
-    }
 }

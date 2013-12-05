@@ -27,4 +27,15 @@ public abstract class Attribute {
         }
         return data.hashCode();
     }
+
+
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("=");
+        stringBuilder.append(this.data == null ? "?" : this.data);
+        stringBuilder.append(" ");
+        return stringBuilder.toString();
+    }
 }
