@@ -18,32 +18,31 @@ import java.util.*;
 public class Calculator {
 
     public static List<Rule> calculateRules(EntrySet entries) {
-
         List<Covering> coverings = calculateCoverings(entries);
 
         //append all of the decision attributes to a list
         List<Integer> decisionAttributes = entries.getDecisionAttributes();
+        Map<Covering, List<Rule>> coveringListMap = new HashMap<Covering, List<Rule>>();
+        for (Covering covering : coverings) {
+            List<Rule> rules = new ArrayList<Rule>();
+            coveringListMap.put(covering, rules);
+            Map<Set<Attribute>, List<Entry>> setListMap = covering.getAttributeListMap();
+            Set<Set<Attribute>> keySet = setListMap.keySet();
+            for(Set<Attribute> key : keySet){
+                List<Entry> entryList = setListMap.get(key);
+                for(Entry entry : entryList){
 
-      /*
-      while(coverings.size() == 0) {
-      //for(int i = 1; i<HEIGHT;i++) { //loop over the entries
-      //  for(int j =0; j<WIDTH;j++) {
+                    Set<Attribute> consequents = new HashSet<Attribute>(entry.getAttributes(decisionAttributes));
+                    Rule rule = new Rule(key, consequents);
+                    rules.add(rule);
 
-          if(entries.getDecisionAttributes().contains(decisionAttributes)) {
-            //String x = String.format("if {%s} is equal to: %2d ", entries[0][j], entires[i][j]);
-            String y;
-            for(int k=0;k<decisionAttributes.size();k++)
-            {
-             // int temp = decisionAttributes[k];
-                String temp1 = String.format("{%2d} is equal to: %s",entries[0][temp],entries[i][temp]);
-                y = y.append(temp1);
+                }
             }
-          }
-          //delete attribute from the set;
-        }        */
+
+        }
 
 
-        System.out.println("Done");
+        System.out.println("Done with coverings");
         return null;
     }
 
@@ -137,33 +136,41 @@ public class Calculator {
     }
 
 
-
-    private static Set<Set<Integer>> collectSets(List<Integer> originalSet, int n){
+    private static Set<Set<Integer>> collectSets(List<Integer> originalSet, int n) {
         Set<Set<Integer>> solution = new HashSet<Set<Integer>>();
-        for(int i = 1; i <= n; i++){
+        for (int i = 1; i <= n; i++) {
             getSubsets(originalSet, i, 0, new HashSet<Integer>(), solution);
         }
 
         return solution;
     }
 
-    private static void getSubsets(List<Integer> originalSet, int n, int index, Set<Integer> currentSet, Set<Set<Integer>> solution){
-       if(currentSet.size() == n){
-           solution.add(new HashSet<Integer>(currentSet));
-           return;
-       }
+    private static void getSubsets(List<Integer> originalSet, int n, int index, Set<Integer> currentSet, Set<Set<Integer>> solution) {
+        if (currentSet.size() == n) {
+            solution.add(new HashSet<Integer>(currentSet));
+            return;
+        }
 
-        if(index == originalSet.size())
+        if (index == originalSet.size())
             return;
         Integer x = originalSet.get(index);
         currentSet.add(x);
-        getSubsets(originalSet, n, index+1, currentSet, solution);
+        getSubsets(originalSet, n, index + 1, currentSet, solution);
         currentSet.remove(x);
-        getSubsets(originalSet, n, index+1, currentSet, solution);
+        getSubsets(originalSet, n, index + 1, currentSet, solution);
     }
 
+    private <T> List<T> intersection(List<T> list1, List<T> list2) {
+        List<T> list = new ArrayList<T>();
 
+        for (T t : list1) {
+            if (list2.contains(t)) {
+                list.add(t);
+            }
+        }
 
+        return list;
+    }
 
 
 }

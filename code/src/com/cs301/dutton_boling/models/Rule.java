@@ -2,6 +2,7 @@ package com.cs301.dutton_boling.models;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,12 +13,12 @@ import java.util.List;
  */
 public class Rule {
 
-    List<String> anecedents = null;
-    List<String> consequents = null;
+    Set<Attribute> anecedents = null;
+    Set<Attribute> consequents = null;
 
-    public Rule(List<String> anecedents, String... consequents) {
+    public Rule(Set<Attribute> anecedents, Set<Attribute> consequents) {
         this.anecedents = anecedents;
-        this.consequents = Arrays.asList(consequents);
+        this.consequents = consequents;
     }
 
     @Override
@@ -28,14 +29,14 @@ public class Rule {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        for(String acecedent : anecedents){
-            stringBuilder.append(acecedent);
+        for(Attribute acecedent : anecedents){
+            stringBuilder.append(acecedent.toString());
             stringBuilder.append(" and ");
         }
         stringBuilder.setLength(stringBuilder.length() - 5);
         stringBuilder.append(" then ");
-        for(String consequent : consequents){
-            stringBuilder.append(consequent);
+        for(Attribute consequent : consequents){
+            stringBuilder.append(consequent.toString());
             stringBuilder.append(" and ");
         }
         stringBuilder.setLength(stringBuilder.length() - 5);

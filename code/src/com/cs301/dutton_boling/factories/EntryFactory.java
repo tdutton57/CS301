@@ -5,7 +5,7 @@ import com.cs301.dutton_boling.models.Entry;
 import com.cs301.dutton_boling.models.Nominal;
 import com.cs301.dutton_boling.models.Numeric;
 
-import java.lang.invoke.WrongMethodTypeException;
+import java.lang.Exception;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -39,7 +39,7 @@ public class EntryFactory {
 
     public void add(AttributeType attributeType){
         if(attributeType == AttributeType.NOMINAL){
-            throw new WrongMethodTypeException("No values were provided for type nominal");
+           // throw new WrongMethodTypeException("No values were provided for type nominal");
         }
         attributes.add(new AttributeBuilder(attributeType));
     }

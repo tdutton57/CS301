@@ -30,6 +30,15 @@ public class Entry implements Comparable{
         return returnable;
     }
 
+    public List<Attribute> getAttributes(List<Integer> indecies){
+        List<Attribute> returnable = new ArrayList<Attribute>();
+        for(Integer index : indecies){
+            returnable.add(getAttribute(index));
+        }
+        return returnable;
+    }
+
+
     @Override
     public int compareTo(Object o) {
         return 0;
