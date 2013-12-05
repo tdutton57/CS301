@@ -36,9 +36,8 @@ public class Calculator {
                 for (Entry entry : entryList) {
                     Set<Attribute> consequents = new HashSet<Attribute>(entry.getAttributes(decisionAttributes));
                     Rule rule = new Rule(key, consequents);
-                    if (!rules.contains(rule)) {
+
                         rules.add(rule);
-                    }
                 }
             }
         }
@@ -130,7 +129,6 @@ public class Calculator {
 
 
         coverings.removeAll(invalidCoverings);
-        System.out.println("Minimizing Coverings");
         return coverings;
     }
 

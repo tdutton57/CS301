@@ -15,10 +15,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -93,7 +91,7 @@ public class Main extends JApplet {
         add(openButton, gbc);
 
         decisionAttrList = new JList<String>(attrs);
-        decisionAttrList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+        decisionAttrList.setLayoutOrientation(JList.VERTICAL_WRAP);
         decisionAttrList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         decisionAttrList.setBorder(new TitledBorder("Decision Attributes"));
         decisionAttrList.setFixedCellHeight(35);
@@ -149,9 +147,11 @@ public class Main extends JApplet {
             @Override
             public void actionPerformed(ActionEvent e) {
                 runButton.setEnabled(false);
+                outputArea.setText("Calculating");
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
+
                         List<Integer> items = new ArrayList<Integer>();
                         for (String decision : decisionAttrList.getSelectedValuesList()) {
                             items.add(entrySet.getAttributeNames().indexOf(decision));
@@ -165,10 +165,24 @@ public class Main extends JApplet {
                             StringBuilder builder = new StringBuilder();
                             for (Covering covering : coveringSet) {
 
-                                builder.append(covering.toString() + "\n");
+
+                                Map<Rule, Integer> ruleIntegerMap = new HashMap<Rule, Integer>();
                                 for (Rule rule : rules.get(covering)) {
+                                    if(ruleIntegerMap.containsKey(rule)){
+                                       ruleIntegerMap.put(rule, ruleIntegerMap.get(rule) + 1);
+                                    }else {
+                                        ruleIntegerMap.put(rule, 1);
+                                    }
+                                }
+
+                                builder.append("Rules for covering: " + covering.toString() + "\n");
+
+                                for(Rule rule : ruleIntegerMap.keySet()){
+
                                     builder.append("\t");
                                     builder.append(rule.toString());
+                                    builder.append(" Occurrences: ");
+                                    builder.append(ruleIntegerMap.get(rule));
                                     builder.append("\n");
                                 }
                             }

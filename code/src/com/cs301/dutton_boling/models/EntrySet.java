@@ -1,8 +1,6 @@
 package com.cs301.dutton_boling.models;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -46,5 +44,17 @@ public class EntrySet {
 
     public int getAttributeCount(){
         return attributeNames != null ? attributeNames.size() : 0;
+    }
+
+    public Set<Integer> getIndexOfEntries(Set<Entry> ent) {
+        Set<Integer> returnable = new HashSet<Integer>();
+        for(Entry entry : ent){
+            returnable.add(getIndexOfEntry(entry));
+        }
+        return returnable;
+    }
+
+    private Integer getIndexOfEntry(Entry entry) {
+        return entries.indexOf(entry);
     }
 }

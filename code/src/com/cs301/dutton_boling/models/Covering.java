@@ -25,13 +25,13 @@ public class Covering {
         return attributeListMap;
     }
 
-    public void addEntry(Set<Attribute> attrbuteSet, Entry entry){
+    public void addEntry(Set<Attribute> attrbuteSet, Entry entry) {
         Boolean inMap = attributeListMap.containsKey(attrbuteSet);
-        if(!inMap){
+        if (!inMap) {
             attributeListMap.put(attrbuteSet, new ArrayList<Entry>());
         }
         List<Entry> entries = attributeListMap.get(attrbuteSet);
-        if(entries.contains(entry)){
+        if (entries.contains(entry)) {
             throw new IllegalStateException("Index already listed");
         }
         entries.add(entry);
@@ -40,11 +40,16 @@ public class Covering {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("{");
-        for(Set<Attribute> attributes : attributeListMap.keySet()){
-            builder.append(attributes.toString());
+
+        builder.append("[");
+        Iterator<Set<Attribute>> setIterator = attributeListMap.keySet().iterator();
+        Set<Attribute> attributes = setIterator.next();
+        for (Attribute attribute : attributes) {
+            builder.append(attribute.getName());
+            builder.append(",");
         }
-        builder.append("}");
+        builder.setLength(builder.length() - 1);
+        builder.append("]");
         return builder.toString();    //To change body of overridden methods use File | Settings | File Templates.
     }
 }
