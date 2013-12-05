@@ -148,6 +148,7 @@ public class Main extends JApplet {
         runButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                runButton.setEnabled(false);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -173,6 +174,8 @@ public class Main extends JApplet {
                             }
                             outputArea.setText(builder.toString());
                         }
+
+                        runButton.setEnabled(true);
                     }
                 }).run();
             }
