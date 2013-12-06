@@ -74,8 +74,11 @@ public class Main extends JApplet {
                             entrySet = Input.buildEntries(file);
                             attrs = new String[entrySet.getAttributeCount()];
                             decisionAttrList.setListData(attrs);
+                            decisionAttrList.repaint();
                             entrySet.getAttributeNames().toArray(attrs);
                             sizeSlider.setMaximum(entrySet.getAttributeCount());
+                            sizeSlider.setValue(1);
+
 
                         }
                     }).run();

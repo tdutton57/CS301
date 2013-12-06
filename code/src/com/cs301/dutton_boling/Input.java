@@ -31,6 +31,8 @@ public class Input {
                 names.add(attribute[1]);
                 if(attribute[2].equals("numeric")){
                     ef.add(attribute[1], EntryFactory.AttributeType.NUMERIC);
+                }else if (attribute[2].equals("binary")){
+                    ef.add(attribute[1], EntryFactory.AttributeType.BINARY);
                 }else if(attribute[2].contains("{")){
                     String strip = attribute[2].replace("{", "");
                     strip = strip.replace("}", "");
