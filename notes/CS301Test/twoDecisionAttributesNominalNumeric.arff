@@ -1,0 +1,13 @@
+@relation twoDecisionNominalNumeric
+@attribute a numeric
+@attribute b {L,R,S} 
+@attribute c {L,R,S}
+@attribute d numeric
+@attribute f numeric
+@attribute g {L,R,S}
+
+@data
+1,L,R,1,1,L
+2,R,L,4,2,L
+2,R,L,4,3,R
+3,S,S,6,4,R

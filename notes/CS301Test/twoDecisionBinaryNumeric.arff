@@ -1,0 +1,16 @@
+@relation twoDecisionBinaryNumeric
+@attribute a binary
+@attribute b numeric 
+@attribute c binary
+@attribute d numeric
+@attribute f binary
+@attribute g binary
+
+@data
+0,1,1,2,0,1
+1,2,2,3,1,0
+0,1,3,7,0,1
+1,2,4,8,1,0
+0,1,5,9,0,1
+1,2,6,10,1,0
+1,2,6,10,0,0

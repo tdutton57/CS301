@@ -1,4 +1,4 @@
-@relation table3_10_fg
+@relation oneDecisionAttributeBinaryNumericNominal
 
 @attribute a numeric
 @attribute b {L,R,S}
@@ -9,10 +9,7 @@
 
 @data
 0,L,0,L,0,L
-0,R,1,L,1,L
-0,L,0,L,0,L
-0,R,1,L,1,L
-1,R,0,L,2,H
-1,R,0,L,2,H
-2,S,2,H,3,H
+0,L,0,L,1,L
+1,R,3,L,2,H
+1,R,3,L,2,H
 2,S,2,H,3,H
