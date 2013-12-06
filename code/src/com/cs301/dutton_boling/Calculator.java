@@ -136,13 +136,17 @@ public class Calculator {
         List<Covering> nonMinmalCoverings = new ArrayList<Covering>();
         for(Covering covering : coverings){
             for(Covering covering1 : coverings){
-                 if(!covering.equals(covering)){
-                     if(covering.getColumns().contains(covering1.getColumns())){
+                 if(!covering.equals(covering1)){
+                     System.out.println("Comparing: " + covering + " with " + covering1);
+                     Boolean subset = covering.getColumns().containsAll(covering1.getColumns());
+                     System.out.println("Is subset: " + subset);
+                     if(subset){
                          nonMinmalCoverings.add(covering);
                      }
                  }
             }
         }
+        System.out.println("Removing coverings: " + nonMinmalCoverings);
         coverings.removeAll(nonMinmalCoverings);
         return coverings;
     }
