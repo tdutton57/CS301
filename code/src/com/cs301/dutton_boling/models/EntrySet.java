@@ -18,6 +18,14 @@ public class EntrySet {
         return decisionAttributes;
     }
 
+    public List<String> getDecisionArrtibuteNames(){
+        List<String> names = new ArrayList<String>();
+        for (Integer index : decisionAttributes){
+            names.add(attributeNames.get(index));
+        }
+        return names;
+    }
+
     public void setDecisionAttributes(Integer... decisionAttributes){
         this.decisionAttributes = Arrays.asList(decisionAttributes);
     }
@@ -56,5 +64,13 @@ public class EntrySet {
 
     private Integer getIndexOfEntry(Entry entry) {
         return entries.indexOf(entry);
+    }
+
+    public List<String> getNamesForSet(Set<Integer> set) {
+        List<String> names = new ArrayList<String>();
+        for(Integer index : set){
+            names.add(attributeNames.get(index));
+        }
+        return names;
     }
 }

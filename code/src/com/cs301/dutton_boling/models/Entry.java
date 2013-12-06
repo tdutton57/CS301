@@ -1,7 +1,9 @@
 package com.cs301.dutton_boling.models;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -38,6 +40,13 @@ public class Entry implements Comparable{
         return returnable;
     }
 
+    public Set<Attribute> getAttributes(Set<Integer> indecies){
+        Set<Attribute> returnable = new HashSet<Attribute>();
+        for(Integer index : indecies){
+            returnable.add(getAttribute(index));
+        }
+        return returnable;
+    }
 
     @Override
     public int compareTo(Object o) {

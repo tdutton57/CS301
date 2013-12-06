@@ -19,9 +19,9 @@ public class Calculator {
 
     private static int maxCoveringSize = -1;
 
-    public static Map<Covering, List<Rule>> calculateRules(EntrySet entries, int size) {
+    public static Map<Covering, List<Rule>> calculateRules(EntrySet entries, int size, boolean minimal) {
         maxCoveringSize = size;
-        List<Covering> coverings = calculateCoverings(entries);
+        List<Covering> coverings = calculateCoverings(entries, minimal);
 
         //append all of the decision attributes to a list
         List<Integer> decisionAttributes = entries.getDecisionAttributes();
@@ -44,7 +44,7 @@ public class Calculator {
         return coveringListMap;
     }
 
-    private static List<Covering> calculateCoverings(EntrySet entries) { //This is the RICO Algorithm
+    private static List<Covering> calculateCoverings(EntrySet entries, boolean minimal) {
         System.out.println("Starting covering");
         List<Covering> coverings = new ArrayList<Covering>();
         List<Integer> attributeColumns = new ArrayList<Integer>();
@@ -75,7 +75,7 @@ public class Calculator {
         }
 
         System.out.println("Validating Coverings");
-        return validCoverings(entries, coverings, entries.getDecisionAttributes());
+        return validCoverings(entries, coverings, entries.getDecisionAttributes(), minimal);
     }
 
     private static void vailidatePartitions(EntrySet entries, Set<Set<Integer>> partitions) {
@@ -94,7 +94,7 @@ public class Calculator {
 
     }
 
-    private static List<Covering> validCoverings(EntrySet entries, List<Covering> coverings, List<Integer> decisionAttributes) {
+    private static List<Covering> validCoverings(EntrySet entries, List<Covering> coverings, List<Integer> decisionAttributes, boolean minimal) {
         //Get the decision attribute covering from the list
         Covering decision = new Covering();
         decision.setColumns(new ArrayList<Integer>(decisionAttributes));
@@ -129,7 +129,11 @@ public class Calculator {
 
 
         coverings.removeAll(invalidCoverings);
-        return minimizeCoverings(coverings);
+        if(minimal){
+            return minimizeCoverings(coverings);
+        }
+        return coverings;
+
     }
 
     private static List<Covering> minimizeCoverings(List<Covering> coverings) {
@@ -137,16 +141,12 @@ public class Calculator {
         for(Covering covering : coverings){
             for(Covering covering1 : coverings){
                  if(!covering.equals(covering1)){
-                     System.out.println("Comparing: " + covering + " with " + covering1);
-                     Boolean subset = covering.getColumns().containsAll(covering1.getColumns());
-                     System.out.println("Is subset: " + subset);
-                     if(subset){
+                     if(covering.getColumns().containsAll(covering1.getColumns())){
                          nonMinmalCoverings.add(covering);
                      }
                  }
             }
         }
-        System.out.println("Removing coverings: " + nonMinmalCoverings);
         coverings.removeAll(nonMinmalCoverings);
         return coverings;
     }

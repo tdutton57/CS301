@@ -52,7 +52,6 @@ public abstract class Attribute {
         stringBuilder.append(name);
         stringBuilder.append("=");
         stringBuilder.append(this.data == null ? "?" : this.data);
-        stringBuilder.append(" ");
         return stringBuilder.toString();
     }
 }
