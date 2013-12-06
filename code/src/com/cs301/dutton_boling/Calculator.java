@@ -129,6 +129,21 @@ public class Calculator {
 
 
         coverings.removeAll(invalidCoverings);
+        return minimizeCoverings(coverings);
+    }
+
+    private static List<Covering> minimizeCoverings(List<Covering> coverings) {
+        List<Covering> nonMinmalCoverings = new ArrayList<Covering>();
+        for(Covering covering : coverings){
+            for(Covering covering1 : coverings){
+                 if(!covering.equals(covering)){
+                     if(covering.getColumns().contains(covering1.getColumns())){
+                         nonMinmalCoverings.add(covering);
+                     }
+                 }
+            }
+        }
+        coverings.removeAll(nonMinmalCoverings);
         return coverings;
     }
 
